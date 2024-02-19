@@ -1,0 +1,26 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net8.0</TargetFramework>
+        <RootNamespace>Ploomes_Test.Domain</RootNamespace>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <Compile Remove="Domain\**" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <EmbeddedResource Remove="Domain\**" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Remove="Domain\**" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Service\" />
+    </ItemGroup>
+
+</Project>
