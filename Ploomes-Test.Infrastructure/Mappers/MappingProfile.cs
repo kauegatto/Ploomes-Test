@@ -10,5 +10,7 @@ public class MappingProfile : Profile
     {
         CreateMap<TicketCreationDto, Ticket>();
         CreateMap<TicketResponseDto, Ticket>();
+        CreateMap<Ticket, TicketResponseDto>();
+        CreateMap<IEnumerable<Ticket>, IEnumerable<TicketResponseDto>>();
     }
 }

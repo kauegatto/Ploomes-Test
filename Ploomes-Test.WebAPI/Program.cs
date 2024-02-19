@@ -1,4 +1,6 @@
+using Humanizer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.OpenApi.Models;
 using Ploomes_Test.Domain;
 using Ploomes_Test.Domain.Dto.Ticket;
 using Ploomes_Test.Domain.Mappers;
@@ -11,7 +13,11 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(c =>
+{
+    c.SwaggerDoc("v1", new OpenApiInfo { Title = "Ploomes Test - Tickets", Version = "v1" });
+    c.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory,"Ploomes-Test.WebAPI.xml"), true);
+});
 
 builder.Services.AddDbContext<DataContext>(options =>
 {
@@ -20,7 +26,7 @@ builder.Services.AddDbContext<DataContext>(options =>
 });
 
 builder.Services.AddAutoMapper(typeof(MappingProfile));
-
+builder.Services.AddControllers();
 builder.Services.AddSingleton<ITicketMapper, TicketMapper>();
 builder.Services.AddScoped<ITicketRepository, TicketRepository>();
 
@@ -34,5 +40,5 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
+app.MapControllers();
 app.Run();

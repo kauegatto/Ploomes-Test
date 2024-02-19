@@ -18,4 +18,13 @@ public class TicketMapper : ITicketMapper
     {
         return mapper.Map<Ticket>(responseDto);
     }
+
+    public TicketResponseDto FromTicket(Ticket ticket)
+    {
+        return mapper.Map<TicketResponseDto>(ticket);
+    }
+    public IEnumerable<TicketResponseDto> FromTicket(IEnumerable<Ticket> ticket)
+    {
+        return mapper.Map<IEnumerable<TicketResponseDto>>(ticket);
+    }
 }

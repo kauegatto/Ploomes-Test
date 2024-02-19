@@ -18,7 +18,6 @@ public class Ticket
         Subject = subject;
         Description = description;
     }
-
     public Guid Id { get; set; }
     public string RequesterEmail { get; set; }
     public string AssigneeEmail { get; set; }
