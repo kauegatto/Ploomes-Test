@@ -2,9 +2,9 @@
 
 public interface ITicketRepository
 {
-    public IEnumerable<Ticket> Get();
-    public Ticket? GetById(Guid id);
-    public Ticket Create(Ticket ticket);
-    public Ticket Update(Ticket ticket);
-    public bool Delete(string id);
+    Task<IEnumerable<Ticket>> GetAll();
+    Task<Ticket> GetById(Guid id);
+    Task<Ticket> Create(Ticket ticket);
+    Task<Ticket> Update(Ticket ticket);
+    Task<bool> Remove(Guid id);
 }

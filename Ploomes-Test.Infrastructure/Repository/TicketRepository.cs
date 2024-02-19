@@ -3,41 +3,40 @@ using Ploomes_Test.Domain;
 using Ploomes_Test.Infrastructure.Data;
 
 namespace Ploomes_Test.Infrastructure.Repository;
-
 public class TicketRepository(DataContext context) : ITicketRepository
 {
-    public IEnumerable<Ticket> Get()
+    public async Task<IEnumerable<Ticket>> GetAll()
     {
-        return context.Tickets.ToList();
+        return await context.Tickets.ToListAsync();
     }
 
-    public Ticket? GetById(Guid id)
+    public async Task<Ticket?> GetById(Guid id)
     {
-        return context.Tickets.Find(id);
+        return await context.Tickets.FindAsync(id);
     }
 
-    public Ticket Create(Ticket ticket)
+    public async Task<Ticket> Create(Ticket ticket)
     {
-        context.Tickets.Add(ticket);
-        context.SaveChanges();
+        await context.Tickets.AddAsync(ticket);
+        await context.SaveChangesAsync();
         return ticket;
     }
 
-    public Ticket Update(Ticket ticket)
+    public async Task<Ticket> Update(Ticket ticket)
     {
         context.Entry(ticket).State = EntityState.Modified;
-        context.SaveChanges();
+        await context.SaveChangesAsync();
         return ticket;
     }
 
-    public bool Delete(string id)
+    public async Task<bool> Remove(Guid id)
     {
-        var ticket = context.Tickets.Find(id);
+        var ticket = await context.Tickets.FindAsync(id);
         if (ticket == null)
             return false;
 
         context.Tickets.Remove(ticket);
-        context.SaveChanges();
+        await context.SaveChangesAsync();
         return true;
     }
 }
