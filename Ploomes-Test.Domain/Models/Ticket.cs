@@ -7,9 +7,9 @@ public class Ticket
     protected Ticket() // Entity Framework
     { }
 
-    public Ticket(Guid id, string requesterEmail, string assigneeEmail, TicketStatus status, string subject, string description)
+    public Ticket(string requesterEmail, string assigneeEmail, TicketStatus status, string subject, string description)
     {
-        Id = id;
+        Id = Guid.NewGuid();
         RequesterEmail = requesterEmail;
         AssigneeEmail = assigneeEmail;
         Status = status;
