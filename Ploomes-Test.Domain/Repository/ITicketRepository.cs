@@ -3,7 +3,7 @@
 public interface ITicketRepository
 {
     Task<IEnumerable<Ticket>> GetAll();
-    Task<Ticket> GetById(Guid id);
+    Task<Ticket?> GetById(Guid id);
     Task<Ticket> Create(Ticket ticket);
     Task<Ticket> Update(Ticket ticket);
     Task<bool> Remove(Guid id);

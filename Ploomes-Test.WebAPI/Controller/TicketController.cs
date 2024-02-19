@@ -36,7 +36,7 @@ namespace Ploomes_Test.WebAPI.Controller
         public async Task<ActionResult<TicketResponseDto>> Get(Guid id)
         {
             var response = await ticketRepository.GetById(id); 
-            return response != null ? Ok(ticketMapper.FromTicket(response)) : NotFound();
+            return response is null ? NotFound() : Ok(ticketMapper.FromTicket(response));
         }
 
         /// <summary>
