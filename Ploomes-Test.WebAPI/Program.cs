@@ -1,8 +1,6 @@
-using Humanizer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using Ploomes_Test.Domain;
-using Ploomes_Test.Domain.Dto.Ticket;
 using Ploomes_Test.Domain.Mappers;
 using Ploomes_Test.Infrastructure.Data;
 using Ploomes_Test.Infrastructure.Mappers;
@@ -36,7 +34,10 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseSwaggerUI(options =>
+    {
+        options.SwaggerEndpoint("/swagger/v1/swagger.json", "Ploomes Test - Tickets");
+    });
 }
 
 app.UseHttpsRedirection();
