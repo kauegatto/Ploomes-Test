@@ -4,6 +4,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ploomes-Test.Domain", "Ploo
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ploomes-Test.Infrastructure", "Ploomes-Test.Infrastructure\Ploomes-Test.Infrastructure.csproj", "{7FFC8A73-5ED3-4C30-A6F0-BC35DBF1FE6F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ploomes-Test.WebAPI", "Ploomes-Test.WebAPI\Ploomes-Test.WebAPI.csproj", "{05501C4C-A9E1-401C-998D-D3DC4039A071}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -18,5 +20,9 @@ Global
 		{7FFC8A73-5ED3-4C30-A6F0-BC35DBF1FE6F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7FFC8A73-5ED3-4C30-A6F0-BC35DBF1FE6F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7FFC8A73-5ED3-4C30-A6F0-BC35DBF1FE6F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{05501C4C-A9E1-401C-998D-D3DC4039A071}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{05501C4C-A9E1-401C-998D-D3DC4039A071}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{05501C4C-A9E1-401C-998D-D3DC4039A071}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{05501C4C-A9E1-401C-998D-D3DC4039A071}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
