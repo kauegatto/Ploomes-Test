@@ -2,29 +2,11 @@
 
 namespace Ploomes_Test.Domain.Dto.Ticket;
 
-public class TicketResponseDto
-{
-    protected TicketResponseDto() // Entity Framework
-    { }
-
-    public TicketResponseDto(Guid id, string requesterEmail, string assigneeEmail, TicketStatus status, string subject, string description)
-    {
-        Id = id;
-        RequesterEmail = requesterEmail;
-        AssigneeEmail = assigneeEmail;
-        Status = status;
-        CreateDate = DateTimeOffset.Now;
-        UpdateDate = DateTimeOffset.Now;
-        Subject = subject;
-        Description = description;
-    }
-
-    public Guid Id { get; set; }
-    public string RequesterEmail { get; set; }
-    public string AssigneeEmail { get; set; }
-    public string Subject { get; set; }
-    public string Description { get; set; }
-    public TicketStatus Status { get; set; } = TicketStatus.Created;
-    private DateTimeOffset CreateDate { get; }
-    private DateTimeOffset UpdateDate { get; }
-}
+public record TicketResponseDto(
+    Guid Id,
+    string RequesterEmail,
+    string AssigneeEmail,
+    string Status,
+    string Subject,
+    string Description)
+{ }
