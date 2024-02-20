@@ -4,10 +4,13 @@ namespace Ploomes_Test.Domain.Dto.Ticket;
 
 public record TicketCreationDto
 (
-    [Required(ErrorMessage = "Email não pode ser vazio")]
+    [Required(ErrorMessage = "RequesterEmail must be present")]
+    [EmailAddress]
     string RequesterEmail,
-    [Required(ErrorMessage = "Título não pode ser vazio")]
+    [Required(ErrorMessage = "Subject must be present")]
+    [StringLength(255)]
     string Subject,
-    [Required(ErrorMessage = "Descrição não pode ser vazia")]
+    [Required(ErrorMessage = "Description must be present")]
+    [StringLength(255)]
     string Description
 ){}
