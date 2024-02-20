@@ -23,7 +23,7 @@ public class TicketMapper : ITicketMapper
     {
         return mapper.Map<TicketResponseDto>(ticket);
     }
-    public IEnumerable<TicketResponseDto> FromTicket(IEnumerable<Ticket> ticket)
+    public IEnumerable<TicketResponseDto> FromTicketList(IEnumerable<Ticket> ticket)
     {
         return mapper.Map<IEnumerable<TicketResponseDto>>(ticket);
     }

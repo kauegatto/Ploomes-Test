@@ -6,6 +6,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ploomes-Test.Infrastructure
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ploomes-Test.WebAPI", "Ploomes-Test.WebAPI\Ploomes-Test.WebAPI.csproj", "{05501C4C-A9E1-401C-998D-D3DC4039A071}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ploomes-Test.SharedKernel", "Ploomes-Test.SharedKernel\Ploomes-Test.SharedKernel.csproj", "{BD1F629F-8FB0-44BC-95B9-43EDA2679E09}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -24,5 +26,9 @@ Global
 		{05501C4C-A9E1-401C-998D-D3DC4039A071}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{05501C4C-A9E1-401C-998D-D3DC4039A071}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{05501C4C-A9E1-401C-998D-D3DC4039A071}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BD1F629F-8FB0-44BC-95B9-43EDA2679E09}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BD1F629F-8FB0-44BC-95B9-43EDA2679E09}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BD1F629F-8FB0-44BC-95B9-43EDA2679E09}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BD1F629F-8FB0-44BC-95B9-43EDA2679E09}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

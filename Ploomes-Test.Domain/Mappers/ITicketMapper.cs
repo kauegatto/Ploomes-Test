@@ -7,6 +7,6 @@ public interface ITicketMapper
     Ticket FromTicketCreationDto(TicketCreationDto creationDto);
     Ticket FromTicketResponseDto(TicketResponseDto responseDto);
     TicketResponseDto FromTicket(Ticket ticket);
-    IEnumerable<TicketResponseDto> FromTicket(IEnumerable<Ticket> ticket);
+    IEnumerable<TicketResponseDto> FromTicketList(IEnumerable<Ticket> ticket);
 
 }
