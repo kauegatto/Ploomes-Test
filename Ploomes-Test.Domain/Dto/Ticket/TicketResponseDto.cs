@@ -3,7 +3,6 @@
 public record TicketResponseDto(
     Guid Id,
     string RequesterEmail,
-    string AssigneeEmail,
     string Status,
     string Subject,
     string Description)
