@@ -1,6 +1,4 @@
-﻿using Ploomes_Test.Domain.Models;
-
-namespace Ploomes_Test.Domain.Dto.Ticket;
+﻿namespace Ploomes_Test.Domain.Dto.Ticket;
 
 public record TicketResponseDto(
     Guid Id,
