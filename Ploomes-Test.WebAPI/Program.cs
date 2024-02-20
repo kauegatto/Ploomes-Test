@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using Ploomes_Test.Domain;
 using Ploomes_Test.Domain.Mappers;
+using Ploomes_Test.Domain.Service;
 using Ploomes_Test.Infrastructure.Data;
 using Ploomes_Test.Infrastructure.Mappers;
 using Ploomes_Test.Infrastructure.Repository;
@@ -27,6 +28,7 @@ builder.Services.AddAutoMapper(typeof(MappingProfile));
 builder.Services.AddControllers();
 builder.Services.AddSingleton<ITicketMapper, TicketMapper>();
 builder.Services.AddScoped<ITicketRepository, TicketRepository>();
+builder.Services.AddScoped<TicketService>();
 
 var app = builder.Build();
 
