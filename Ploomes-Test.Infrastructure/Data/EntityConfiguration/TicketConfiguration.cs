@@ -17,7 +17,6 @@ public class TicketConfiguration: IEntityTypeConfiguration<Ticket>
             .HasMaxLength(255);
 
         builder.Property(t => t.AssigneeEmail)
-            .IsRequired()
             .HasMaxLength(255);
 
         builder.Property(t => t.Subject)
@@ -30,7 +29,5 @@ public class TicketConfiguration: IEntityTypeConfiguration<Ticket>
         builder.Property(t => t.Status)
             .IsRequired()
             .HasConversion<string>();
-        
-       
     }
 }
