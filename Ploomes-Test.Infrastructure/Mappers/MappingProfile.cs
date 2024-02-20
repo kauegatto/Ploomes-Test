@@ -10,8 +10,7 @@ public class MappingProfile : Profile
     {
         CreateMap<TicketCreationDto, Ticket>()
             .ConstructUsing( x => new Ticket(x.RequesterEmail, x.Subject, x.Description));
-        CreateMap<TicketResponseDto, Ticket>();
-        CreateMap<Ticket, TicketResponseDto>();
-        CreateMap<IEnumerable<Ticket>, IEnumerable<TicketResponseDto>>();
+        CreateMap<TicketResponseDto, Ticket>().ReverseMap();
+        CreateMap<IEnumerable<TicketResponseDto>, IEnumerable<Ticket>>();
     }
 }

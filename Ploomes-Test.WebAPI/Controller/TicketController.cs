@@ -1,5 +1,4 @@
 using Microsoft.AspNetCore.Mvc;
-using Ploomes_Test.Domain;
 using Ploomes_Test.Domain.Dto.Ticket;
 using Ploomes_Test.Domain.Mappers;
 using Ploomes_Test.Domain.Service;
