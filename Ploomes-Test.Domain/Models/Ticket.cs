@@ -8,12 +8,12 @@ public class Ticket
 {
     protected Ticket() // Entity Framework
     { }
-    public Ticket(string requesterEmail, string assigneeEmail, TicketStatus status, string subject, string description)
+    public Ticket(string requesterEmail, string subject, string description)
     {
         Id = Guid.NewGuid();
         RequesterEmail = requesterEmail;
-        AssigneeEmail = assigneeEmail;
-        Status = status;
+        AssigneeEmail = null;
+        Status = TicketStatus.Created;
         CreateDate = DateTimeOffset.Now;
         UpdateDate = DateTimeOffset.Now;
         StartedAt = null;
@@ -24,11 +24,11 @@ public class Ticket
     }
     public Guid Id { get; set; }
     public string RequesterEmail { get; set; }
-    public string AssigneeEmail { get; set; }
+    public string? AssigneeEmail { get; set; }
     public string Subject { get; set; }
     public string Description { get; set; }
     public string? CancellingReason { get; set; }
-    public TicketStatus Status { get; set; } = TicketStatus.Created;
+    public TicketStatus Status { get; set; }
     private DateTimeOffset CreateDate { get; set; }
     private DateTimeOffset UpdateDate { get; set; }
     private DateTimeOffset? StartedAt { get; set; }

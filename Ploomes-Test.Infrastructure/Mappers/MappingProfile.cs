@@ -8,7 +8,8 @@ public class MappingProfile : Profile
 {
     public MappingProfile()
     {
-        CreateMap<TicketCreationDto, Ticket>();
+        CreateMap<TicketCreationDto, Ticket>()
+            .ConstructUsing( x => new Ticket(x.RequesterEmail, x.Subject, x.Description));
         CreateMap<TicketResponseDto, Ticket>();
         CreateMap<Ticket, TicketResponseDto>();
         CreateMap<IEnumerable<Ticket>, IEnumerable<TicketResponseDto>>();
