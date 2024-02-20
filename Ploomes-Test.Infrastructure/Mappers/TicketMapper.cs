@@ -5,10 +5,8 @@ using Ploomes_Test.Domain.Mappers;
 
 namespace Ploomes_Test.Infrastructure.Mappers;
 
-public class TicketMapper : ITicketMapper
+public class TicketMapper(IMapper mapper) : ITicketMapper
 {
-    private readonly IMapper mapper;
-
     public Ticket FromTicketCreationDto(TicketCreationDto creationDto)
     {
         return mapper.Map<Ticket>(creationDto);

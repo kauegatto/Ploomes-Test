@@ -6,7 +6,7 @@ namespace Ploomes_Test.Infrastructure.Mappers;
 
 public class MappingProfile : Profile
 {
-    protected MappingProfile()
+    public MappingProfile()
     {
         CreateMap<TicketCreationDto, Ticket>();
         CreateMap<TicketResponseDto, Ticket>();
