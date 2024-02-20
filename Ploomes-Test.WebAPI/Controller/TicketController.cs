@@ -61,12 +61,13 @@ namespace Ploomes_Test.WebAPI.Controller
         /// <param name="id">O ID do ticket a ser atribuído.</param>
         /// <param name="assigneeEmail">O email do novo responsável.</param>
         /// <returns>O ticket atribuído.</returns>
-        [HttpPost("{id}/assign")]
+        [HttpPost("{id:guid}/assign")]
         [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<TicketResponseDto>> Assign(Guid id, string assigneeEmail)
+        public async Task<ActionResult<TicketResponseDto>> Assign([FromRoute] Guid id, [FromBody] AssignTicketDto assignTicketDto)
         {
-            var result = await ticketService.Assign(id, assigneeEmail);
+            var result = await ticketService.Assign(id, assignTicketDto.AssigneeEmail);
             return result.Match<ActionResult>(
                 ticket => Ok(ticketMapper.FromTicket(ticket)),
                 ex => NotFound());

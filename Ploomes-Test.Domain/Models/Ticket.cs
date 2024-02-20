@@ -41,6 +41,7 @@ public class Ticket
             return new Result<Ticket>(ex);
         }
         AssigneeEmail = assigneeEmail;
+        Status = TicketStatus.InProgress;
         if(StartedAt is null){
             StartedAt = DateTimeOffset.Now;
         }

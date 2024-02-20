@@ -10,9 +10,18 @@ public class TicketService(ITicketRepository ticketRepository, ITicketMapper tic
     public async Task<Result<Ticket>> Assign(Guid ticketId, string assigneeEmail)
     {
         var ticketResult = await GetTicketById(ticketId);
-        return ticketResult.Match(
-            ticket => ticket.Assign(assigneeEmail),
-            ex => new Result<Ticket>(ex));
+
+        return await ticketResult.Match<Task<Result<Ticket>>>(
+            async ticket =>
+            {
+                var assignResult = ticket.Assign(assigneeEmail);
+                if (assignResult.IsFaulted)
+                    return assignResult;
+
+                return await UpdateTicket(ticket);
+            },
+            ex => Task.FromResult(new Result<Ticket>(ex))
+        );
     }
 
     public async Task<Result<Ticket>> Cancel(Guid ticketId, string cancellingReason)
@@ -52,5 +61,9 @@ public class TicketService(ITicketRepository ticketRepository, ITicketMapper tic
     public async Task<IEnumerable<Ticket>> GetAll()
     {
         return await ticketRepository.GetAll();
+    }
+    public async Task<Result<Ticket>> UpdateTicket(Ticket ticket)
+    {
+        return new Result<Ticket>(await ticketRepository.Update(ticket));
     }
 }
