@@ -35,9 +35,9 @@ namespace Ploomes_Test.WebAPI.Controller
         public async Task<ActionResult<TicketResponseDto>> Get(Guid id)
         {
             var result = await ticketService.GetTicketById(id);
-            return result.Match<ActionResult>(
-                ticket => Ok(ticketMapper.FromTicket(ticket)),
-                ex => NotFound());
+            if (result.IsFailed)
+                NotFound();
+            return Ok(ticketMapper.FromTicket(result.Value));
         }
 
         /// <summary>
@@ -50,16 +50,15 @@ namespace Ploomes_Test.WebAPI.Controller
         public async Task<ActionResult<TicketResponseDto>> Post([FromBody] TicketCreationDto creationDto)
         {
             var result = await ticketService.Create(creationDto);
-            return result.Match<ActionResult>(
-                ticket => CreatedAtAction(nameof(Get), new { id = ticket.Id }, ticketMapper.FromTicket(ticket)),
-                ex => BadRequest(ex.Message));
+            if (result.IsFailed)
+                BadRequest();
+            return CreatedAtAction(nameof(Get), new { id = result.Value.Id }, ticketMapper.FromTicket(result.Value));
         }
         
         /// <summary>
         /// Atribui um ticket a um novo responsável.
         /// </summary>
         /// <param name="id">O ID do ticket a ser atribuído.</param>
-        /// <param name="assigneeEmail">O email do novo responsável.</param>
         /// <returns>O ticket atribuído.</returns>
         [HttpPost("{id:guid}/assign")]
         [ProducesResponseType(StatusCodes.Status200OK)]
@@ -68,9 +67,9 @@ namespace Ploomes_Test.WebAPI.Controller
         public async Task<ActionResult<TicketResponseDto>> Assign([FromRoute] Guid id, [FromBody] AssignTicketDto assignTicketDto)
         {
             var result = await ticketService.Assign(id, assignTicketDto.AssigneeEmail);
-            return result.Match<ActionResult>(
-                ticket => Ok(ticketMapper.FromTicket(ticket)),
-                ex => NotFound());
+            if (result.IsFailed)
+                NotFound();
+            return Ok(ticketMapper.FromTicket(result.Value));
         }
 
         /// <summary>
@@ -85,9 +84,9 @@ namespace Ploomes_Test.WebAPI.Controller
         public async Task<ActionResult<TicketResponseDto>> Cancel(Guid id, string cancellingReason)
         {
             var result = await ticketService.Cancel(id, cancellingReason);
-            return result.Match<ActionResult>(
-                ticket => Ok(ticketMapper.FromTicket(ticket)),
-                ex => NotFound());
+            if (result.IsFailed)
+                NotFound();
+            return Ok(ticketMapper.FromTicket(result.Value));
         }
 
         /// <summary>
@@ -101,9 +100,9 @@ namespace Ploomes_Test.WebAPI.Controller
         public async Task<ActionResult<TicketResponseDto>> Complete(Guid id)
         {
             var result = await ticketService.Complete(id);
-            return result.Match<ActionResult>(
-                ticket => Ok(ticketMapper.FromTicket(ticket)),
-                ex => NotFound());
+            if (result.IsFailed)
+                NotFound();
+            return Ok(ticketMapper.FromTicket(result.Value));
         }
     }
 }

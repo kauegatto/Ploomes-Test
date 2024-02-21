@@ -1,6 +1,5 @@
-﻿using LanguageExt.Common;
+﻿using FluentResults;
 using Ploomes_Test.Domain.Dto.Ticket;
-using Ploomes_Test.Domain.Exceptions;
 using Ploomes_Test.Domain.Mappers;
 
 namespace Ploomes_Test.Domain.Service;
@@ -9,35 +8,52 @@ public class TicketService(ITicketRepository ticketRepository, ITicketMapper tic
 {
     public async Task<Result<Ticket>> Assign(Guid ticketId, string assigneeEmail)
     {
-        var ticketResult = await GetTicketById(ticketId);
+        Result<Ticket> ticketResult = await GetTicketById(ticketId);
+        if (ticketResult.IsFailed) 
+            return ticketResult;
 
-        return await ticketResult.Match<Task<Result<Ticket>>>(
-            async ticket =>
-            {
-                var assignResult = ticket.Assign(assigneeEmail);
-                if (assignResult.IsFaulted)
-                    return assignResult;
-
-                return await UpdateTicket(ticket);
-            },
-            ex => Task.FromResult(new Result<Ticket>(ex))
-        );
+        Ticket ticket = ticketResult.Value;
+        Result assignResult = ticket.Assign(assigneeEmail);
+        if (assignResult.IsSuccess)
+        {
+            await UpdateTicket(ticket);
+        }
+        return assignResult;
     }
 
     public async Task<Result<Ticket>> Cancel(Guid ticketId, string cancellingReason)
     {
         var ticketResult = await GetTicketById(ticketId);
-        return ticketResult.Match(
-            ticket => ticket.Cancel(cancellingReason),
-            ex => new Result<Ticket>(ex));
+        if (ticketResult.IsFailed)
+        {
+            return ticketResult;
+        }
+
+        var ticket = ticketResult.Value;
+        Result cancellationResult = ticket.Cancel(cancellingReason);
+        if (cancellationResult.IsSuccess)
+        {
+            await UpdateTicket(ticket);
+        }
+        return cancellationResult;
     }
     
     public async Task<Result<Ticket>> Complete(Guid ticketId)
     {
         var ticketResult = await GetTicketById(ticketId);
-        return ticketResult.Match(
-            ticket => ticket.Complete(),
-            ex => new Result<Ticket>(ex));
+        if (ticketResult.IsFailed)
+        {
+            return ticketResult;
+        }
+
+        var ticket = ticketResult.Value;
+        Result completion = ticket.Complete();
+        if (completion.IsSuccess)
+        {
+            await UpdateTicket(ticket);
+        }
+
+        return completion;
     }
     
     public async Task<Result<Ticket>> Create(TicketCreationDto creationDto)
@@ -52,8 +68,8 @@ public class TicketService(ITicketRepository ticketRepository, ITicketMapper tic
         var ticket = await ticketRepository.GetById(ticketId);
         if (ticket is null)
         {
-            var ex = new ValidationException($"Ticket with id {ticketId} not found");
-            return new Result<Ticket>(ex);
+            var ex = $"Ticket with id {ticketId} not found";
+            return Result.Fail(ex);
         }
 
         return ticket;
@@ -64,6 +80,6 @@ public class TicketService(ITicketRepository ticketRepository, ITicketMapper tic
     }
     public async Task<Result<Ticket>> UpdateTicket(Ticket ticket)
     {
-        return new Result<Ticket>(await ticketRepository.Update(ticket));
+        return await ticketRepository.Update(ticket);
     }
 }

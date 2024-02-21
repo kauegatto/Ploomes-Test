@@ -1,5 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-using LanguageExt.Common;
+﻿using FluentResults;
 using Ploomes_Test.Domain.Models;
 
 namespace Ploomes_Test.Domain;
@@ -33,43 +32,43 @@ public class Ticket
     private DateTimeOffset UpdateDate { get; set; }
     private DateTimeOffset? StartedAt { get; set; }
     private DateTimeOffset? EndedAt { get; set; }
-    public Result<Ticket> Assign(string assigneeEmail)
+    public Result Assign(string assigneeEmail)
     {
         if (Status is not (TicketStatus.Created or TicketStatus.InProgress))
         {
-            var ex = new ValidationException($"Invalid status: Tickets in {Status} cannot be assigned");
-            return new Result<Ticket>(ex);
+            var msg = $"Invalid status: Tickets in {Status} cannot be assigned";
+            return Result.Fail(msg);
         }
         AssigneeEmail = assigneeEmail;
         Status = TicketStatus.InProgress;
         if(StartedAt is null){
             StartedAt = DateTimeOffset.Now;
         }
-        return this;
+        return Result.Ok();
     }
-    public Result<Ticket> Complete()
+    public Result Complete()
     {
         if (Status != TicketStatus.InProgress)
         {
-            var ex = new ValidationException($"Invalid status: Tickets in {Status} cannot be completed");
-            return new Result<Ticket>(ex);
+            var ex = $"Invalid status: Tickets in {Status} cannot be completed";
+            return Result.Fail(ex);
         }
 
         Status = TicketStatus.Completed;
         EndedAt = DateTimeOffset.Now;
 
-        return this;
+        return Result.Ok();
     }
-    public Result<Ticket> Cancel(string cancellingReason)
+    public Result Cancel(string cancellingReason)
     {
         if (Status is (TicketStatus.Completed or TicketStatus.Cancelled))
         {
-            var ex = new ValidationException($"Invalid status: Tickets in {Status} cannot be cancelled");
-            return new Result<Ticket>(ex);
+            var ex = $"Invalid status: Tickets in {Status} cannot be cancelled";
+            return Result.Fail(ex);
         }
         Status = TicketStatus.Completed;
         EndedAt = DateTimeOffset.Now;
         CancellingReason = cancellingReason;
-        return this;
+        return Result.Ok();
     }
 }
