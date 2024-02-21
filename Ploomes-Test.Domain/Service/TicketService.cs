@@ -81,7 +81,8 @@ public class TicketService(ITicketRepository ticketRepository, ITicketMapper tic
     {
         return await ticketRepository.GetAll();
     }
-    public async Task<Result<Ticket>> UpdateTicket(Ticket ticket)
+
+    private async Task<Result<Ticket>> UpdateTicket(Ticket ticket)
     {
         return await ticketRepository.Update(ticket);
     }
