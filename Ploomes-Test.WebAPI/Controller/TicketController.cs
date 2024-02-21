@@ -73,7 +73,7 @@ namespace Ploomes_Test.WebAPI.Controller
         /// Cancela um ticket.
         /// </summary>
         /// <param name="id">O ID do ticket a ser cancelado.</param>
-        /// <param name="cancellingReason">O motivo do cancelamento.</param>
+        /// <param name="cancelTicketDto">O dto que contém o motivo do cancelamento.</param>
         /// <returns>O ticket cancelado.</returns>
         [HttpPost("{id:guid}/cancel")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(TicketResponseDto))]
