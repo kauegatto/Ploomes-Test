@@ -29,10 +29,10 @@ public class Ticket
     public string Description { get; set; }
     public string? CancellingReason { get; set; }
     public TicketStatus Status { get; set; }
-    private DateTimeOffset CreateDate { get; set; }
-    private DateTimeOffset UpdateDate { get; set; }
-    private DateTimeOffset? StartedAt { get; set; }
-    private DateTimeOffset? EndedAt { get; set; }
+    public DateTimeOffset CreateDate { get; }
+    public DateTimeOffset UpdateDate { get; set; }
+    public DateTimeOffset? StartedAt { get; set; }
+    public DateTimeOffset? EndedAt { get; set; }
     public Result Assign(string assigneeEmail)
     {
         if (Status is not (TicketStatus.Created or TicketStatus.InProgress))

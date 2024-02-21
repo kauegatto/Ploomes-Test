@@ -27,8 +27,24 @@ public class TicketConfiguration: IEntityTypeConfiguration<Ticket>
         builder.Property(t => t.Description)
             .IsRequired();
 
+        //  Map Ticket Status Enum into String
         builder.Property(t => t.Status)
             .IsRequired()
             .HasConversion<string>();
+        
+        // Map DateTimeOffset properties
+        builder.Property(t => t.CreateDate)
+            .IsRequired()
+            .HasColumnType("datetimeoffset");
+
+        builder.Property(t => t.UpdateDate)
+            .IsRequired()
+            .HasColumnType("datetimeoffset");
+
+        builder.Property(t => t.StartedAt)
+            .HasColumnType("datetimeoffset");
+
+        builder.Property(t => t.EndedAt)
+            .HasColumnType("datetimeoffset");
     }
 }
