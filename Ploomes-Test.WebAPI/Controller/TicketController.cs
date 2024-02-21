@@ -51,9 +51,7 @@ namespace Ploomes_Test.WebAPI.Controller
         public async Task<IActionResult> Post([FromBody] TicketCreationDto creationDto)
         {
             var result = await ticketService.Create(creationDto);
-            if (result.IsFailed)
-                return ActionResultFromError.FromResult(result);
-            return CreatedAtAction(nameof(Get), new { id = result.Value.Id }, ticketMapper.FromTicket(result.Value));
+            return result.IsFailed ? ActionResultFromError.FromResult(result) : CreatedAtAction(nameof(Get), new { id = result.Value.Id }, ticketMapper.FromTicket(result.Value));
         }
         
         /// <summary>
@@ -68,9 +66,7 @@ namespace Ploomes_Test.WebAPI.Controller
         public async Task<IActionResult> Assign([FromRoute] Guid id, [FromBody] AssignTicketDto assignTicketDto)
         {
             var result = await ticketService.Assign(id, assignTicketDto.AssigneeEmail);
-            if (result.IsFailed)
-                return ActionResultFromError.FromResult(result);
-            return Ok(ticketMapper.FromTicket(result.Value));
+            return result.IsFailed ? ActionResultFromError.FromResult(result) : Ok(ticketMapper.FromTicket(result.Value));
         }
 
         /// <summary>
@@ -85,9 +81,7 @@ namespace Ploomes_Test.WebAPI.Controller
         public async  Task<IActionResult> Cancel([FromRoute] Guid id, [FromBody] CancelTicketDto cancelTicketDto)
         {
             var result = await ticketService.Cancel(id, cancelTicketDto.CancellingReason);
-            if (result.IsFailed)
-                return ActionResultFromError.FromResult(result);
-            return Ok(ticketMapper.FromTicket(result.Value));
+            return result.IsFailed ? ActionResultFromError.FromResult(result) : Ok(ticketMapper.FromTicket(result.Value));
         }
 
         /// <summary>
@@ -101,9 +95,7 @@ namespace Ploomes_Test.WebAPI.Controller
         public async Task<IActionResult> Complete([FromRoute] Guid id)
         {
             var result = await ticketService.Complete(id);
-            if (result.IsFailed)
-               return ActionResultFromError.FromResult(result);
-            return Ok(ticketMapper.FromTicket(result.Value));
+             return result.IsFailed ? ActionResultFromError.FromResult(result) : Ok(ticketMapper.FromTicket(result.Value));
         }
     }
 }
