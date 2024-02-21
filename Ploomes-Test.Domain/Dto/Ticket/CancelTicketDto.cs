@@ -8,6 +8,6 @@ namespace Ploomes_Test.Domain.Dto.Ticket;
 public record CancelTicketDto
 (
     [Required]
-    [StringLength(255)]
+    [StringLength(255, MinimumLength = 10, ErrorMessage = "Cancelling reason should be between 10 and 255 characters.")]
     string CancellingReason
 ){}

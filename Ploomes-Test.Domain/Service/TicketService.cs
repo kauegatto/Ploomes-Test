@@ -77,6 +77,19 @@ public class TicketService(ITicketRepository ticketRepository, ITicketMapper tic
         }
         return ticket;
     }
+    
+    public async Task<Result> Delete(Guid ticketId)
+    {
+        var ticket = await ticketRepository.GetById(ticketId);
+        if (ticket == null)
+        {
+            var msg = $"Ticket with ID {ticketId} not found";
+            return Result.Fail(new NotFoundError(msg));
+        }
+        await ticketRepository.Remove(ticket);
+        return Result.Ok();
+    }
+    
     public async Task<IEnumerable<Ticket>> GetAll()
     {
         return await ticketRepository.GetAll();

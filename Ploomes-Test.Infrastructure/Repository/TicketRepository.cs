@@ -29,12 +29,8 @@ public class TicketRepository(DataContext context) : ITicketRepository
         return ticket;
     }
 
-    public async Task<bool> Remove(Guid id)
+    public async Task<bool> Remove(Ticket ticket)
     {
-        var ticket = await context.Tickets.FindAsync(id);
-        if (ticket == null)
-            return false;
-
         context.Tickets.Remove(ticket);
         await context.SaveChangesAsync();
         return true;
