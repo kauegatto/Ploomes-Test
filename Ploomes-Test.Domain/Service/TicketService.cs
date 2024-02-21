@@ -75,7 +75,6 @@ public class TicketService(ITicketRepository ticketRepository, ITicketMapper tic
             var msg = $"Ticket with id {ticketId} not found";
             return Result.Fail(new NotFoundError(msg));
         }
-
         return ticket;
     }
     public async Task<IEnumerable<Ticket>> GetAll()

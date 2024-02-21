@@ -82,9 +82,9 @@ namespace Ploomes_Test.WebAPI.Controller
         [HttpPost("{id:guid}/cancel")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async  Task<IActionResult> Cancel(Guid id, string cancellingReason)
+        public async  Task<IActionResult> Cancel([FromRoute] Guid id, [FromBody] CancelTicketDto cancelTicketDto)
         {
-            var result = await ticketService.Cancel(id, cancellingReason);
+            var result = await ticketService.Cancel(id, cancelTicketDto.CancellingReason);
             if (result.IsFailed)
                 return ActionResultFromError.FromResult(result);
             return Ok(ticketMapper.FromTicket(result.Value));
@@ -98,7 +98,7 @@ namespace Ploomes_Test.WebAPI.Controller
         [HttpPost("{id:guid}/complete")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> Complete(Guid id)
+        public async Task<IActionResult> Complete([FromRoute] Guid id)
         {
             var result = await ticketService.Complete(id);
             if (result.IsFailed)
