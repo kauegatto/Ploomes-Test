@@ -1,5 +1,6 @@
 ﻿using FluentResults;
 using Ploomes_Test.Domain.Dto.Ticket;
+using Ploomes_Test.Domain.Exceptions;
 using Ploomes_Test.Domain.Mappers;
 
 namespace Ploomes_Test.Domain.Service;
@@ -17,6 +18,7 @@ public class TicketService(ITicketRepository ticketRepository, ITicketMapper tic
         if (assignResult.IsSuccess)
         {
             await UpdateTicket(ticket);
+            return ticket;
         }
         return assignResult;
     }
@@ -34,6 +36,7 @@ public class TicketService(ITicketRepository ticketRepository, ITicketMapper tic
         if (cancellationResult.IsSuccess)
         {
             await UpdateTicket(ticket);
+            return ticket;
         }
         return cancellationResult;
     }
@@ -51,6 +54,7 @@ public class TicketService(ITicketRepository ticketRepository, ITicketMapper tic
         if (completion.IsSuccess)
         {
             await UpdateTicket(ticket);
+            return ticket;
         }
 
         return completion;
@@ -68,8 +72,8 @@ public class TicketService(ITicketRepository ticketRepository, ITicketMapper tic
         var ticket = await ticketRepository.GetById(ticketId);
         if (ticket is null)
         {
-            var ex = $"Ticket with id {ticketId} not found";
-            return Result.Fail(ex);
+            var msg = $"Ticket with id {ticketId} not found";
+            return Result.Fail(new NotFoundError(msg));
         }
 
         return ticket;

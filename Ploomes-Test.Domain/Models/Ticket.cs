@@ -1,4 +1,5 @@
 ﻿using FluentResults;
+using Ploomes_Test.Domain.Exceptions;
 using Ploomes_Test.Domain.Models;
 
 namespace Ploomes_Test.Domain;
@@ -37,7 +38,7 @@ public class Ticket
         if (Status is not (TicketStatus.Created or TicketStatus.InProgress))
         {
             var msg = $"Invalid status: Tickets in {Status} cannot be assigned";
-            return Result.Fail(msg);
+            return Result.Fail(new ValidationError(msg));
         }
         AssigneeEmail = assigneeEmail;
         Status = TicketStatus.InProgress;
@@ -50,8 +51,8 @@ public class Ticket
     {
         if (Status != TicketStatus.InProgress)
         {
-            var ex = $"Invalid status: Tickets in {Status} cannot be completed";
-            return Result.Fail(ex);
+            var msg = $"Invalid status: Tickets in {Status} cannot be completed";
+            return Result.Fail(new ValidationError(msg));
         }
 
         Status = TicketStatus.Completed;

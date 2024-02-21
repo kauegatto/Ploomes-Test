@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Ploomes_Test.Domain.Dto.Ticket;
 using Ploomes_Test.Domain.Mappers;
 using Ploomes_Test.Domain.Service;
+using Ploomes_Test.WebAPI.Helpers;
 
 namespace Ploomes_Test.WebAPI.Controller
 {
@@ -19,7 +20,7 @@ namespace Ploomes_Test.WebAPI.Controller
         /// <returns>Uma lista de todos os tickets.</returns>
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<ActionResult<IEnumerable<TicketResponseDto>>> Get()
+        public async Task<IActionResult> Get()
         {
             return Ok(ticketMapper.FromTicketList(await ticketService.GetAll()));
         }
@@ -29,14 +30,14 @@ namespace Ploomes_Test.WebAPI.Controller
         /// </summary>
         /// <param name="id">O ID do ticket a ser recuperado.</param>
         /// <returns>O ticket com o ID especificado.</returns>
-        [HttpGet("{id}")]
+        [HttpGet("{id:guid}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<TicketResponseDto>> Get(Guid id)
+        public async Task<IActionResult> Get(Guid id)
         {
             var result = await ticketService.GetTicketById(id);
             if (result.IsFailed)
-                NotFound();
+                return NotFound(result.Errors);
             return Ok(ticketMapper.FromTicket(result.Value));
         }
 
@@ -47,11 +48,11 @@ namespace Ploomes_Test.WebAPI.Controller
         /// <returns>O ticket recém-criado.</returns>
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
-        public async Task<ActionResult<TicketResponseDto>> Post([FromBody] TicketCreationDto creationDto)
+        public async Task<IActionResult> Post([FromBody] TicketCreationDto creationDto)
         {
             var result = await ticketService.Create(creationDto);
             if (result.IsFailed)
-                BadRequest();
+                return ActionResultFromError.FromResult(result);
             return CreatedAtAction(nameof(Get), new { id = result.Value.Id }, ticketMapper.FromTicket(result.Value));
         }
         
@@ -64,11 +65,11 @@ namespace Ploomes_Test.WebAPI.Controller
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<TicketResponseDto>> Assign([FromRoute] Guid id, [FromBody] AssignTicketDto assignTicketDto)
+        public async Task<IActionResult> Assign([FromRoute] Guid id, [FromBody] AssignTicketDto assignTicketDto)
         {
             var result = await ticketService.Assign(id, assignTicketDto.AssigneeEmail);
             if (result.IsFailed)
-                NotFound();
+                return ActionResultFromError.FromResult(result);
             return Ok(ticketMapper.FromTicket(result.Value));
         }
 
@@ -78,14 +79,14 @@ namespace Ploomes_Test.WebAPI.Controller
         /// <param name="id">O ID do ticket a ser cancelado.</param>
         /// <param name="cancellingReason">O motivo do cancelamento.</param>
         /// <returns>O ticket cancelado.</returns>
-        [HttpPost("{id}/cancel")]
+        [HttpPost("{id:guid}/cancel")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<TicketResponseDto>> Cancel(Guid id, string cancellingReason)
+        public async  Task<IActionResult> Cancel(Guid id, string cancellingReason)
         {
             var result = await ticketService.Cancel(id, cancellingReason);
             if (result.IsFailed)
-                NotFound();
+                return ActionResultFromError.FromResult(result);
             return Ok(ticketMapper.FromTicket(result.Value));
         }
 
@@ -94,14 +95,14 @@ namespace Ploomes_Test.WebAPI.Controller
         /// </summary>
         /// <param name="id">O ID do ticket a ser concluído.</param>
         /// <returns>O ticket concluído.</returns>
-        [HttpPost("{id}/complete")]
+        [HttpPost("{id:guid}/complete")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<TicketResponseDto>> Complete(Guid id)
+        public async Task<IActionResult> Complete(Guid id)
         {
             var result = await ticketService.Complete(id);
             if (result.IsFailed)
-                NotFound();
+               return ActionResultFromError.FromResult(result);
             return Ok(ticketMapper.FromTicket(result.Value));
         }
     }
