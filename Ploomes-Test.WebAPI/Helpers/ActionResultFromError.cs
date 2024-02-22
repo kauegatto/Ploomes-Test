@@ -42,7 +42,6 @@ public class ActionResultFromError
             if (!result.IsFailed) 
                 throw new ApplicationException("Unsupported error");
 
-
             if (result.HasError<ValidationError>())
                 return new BadRequestObjectResult(GenerateProblemDetails(context,result.Errors, "A validation error occured", 400));
             
