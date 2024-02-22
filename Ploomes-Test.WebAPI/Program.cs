@@ -45,6 +45,7 @@ app.UseSwagger();
 app.UseSwaggerUI(options =>
 {
     options.SwaggerEndpoint("/swagger/v1/swagger.json", "Ploomes Test - Tickets");
+    options.RoutePrefix = string.Empty;
 });
 
 app.UseHttpsRedirection();
