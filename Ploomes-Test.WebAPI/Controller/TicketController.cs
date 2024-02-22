@@ -32,7 +32,7 @@ namespace Ploomes_Test.WebAPI.Controller
         /// <returns>O ticket com o ID especificado.</returns>
         [HttpGet("{id:guid}")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(TicketResponseDto))]
-        [ProducesResponseType(typeof(void), StatusCodes.Status404NotFound)]
+        [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
         public async Task<IActionResult> Get(Guid id)
         {
             var result = await ticketService.GetTicketById(id);
@@ -61,8 +61,8 @@ namespace Ploomes_Test.WebAPI.Controller
         /// <returns>O ticket atribuído.</returns>
         [HttpPost("{id:guid}/assign")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(TicketResponseDto))]
-        [ProducesResponseType(typeof(void), StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(typeof(void), StatusCodes.Status404NotFound)]
+        [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
         public async Task<IActionResult> Assign([FromRoute] Guid id, [FromBody] AssignTicketDto assignTicketDto)
         {
             var result = await ticketService.Assign(id, assignTicketDto.AssigneeEmail);
@@ -77,7 +77,7 @@ namespace Ploomes_Test.WebAPI.Controller
         /// <returns>O ticket cancelado.</returns>
         [HttpPost("{id:guid}/cancel")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(TicketResponseDto))]
-        [ProducesResponseType(typeof(void), StatusCodes.Status404NotFound)]
+        [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
         public async  Task<IActionResult> Cancel([FromRoute] Guid id, [FromBody] CancelTicketDto cancelTicketDto)
         {
             var result = await ticketService.Cancel(id, cancelTicketDto.CancellingReason);
@@ -91,7 +91,7 @@ namespace Ploomes_Test.WebAPI.Controller
         /// <returns>O ticket concluído.</returns>
         [HttpPost("{id:guid}/complete")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(TicketResponseDto))]
-        [ProducesResponseType(typeof(void), StatusCodes.Status404NotFound)]
+        [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
         public async Task<IActionResult> Complete([FromRoute] Guid id)
         {
             var result = await ticketService.Complete(id);
@@ -105,7 +105,7 @@ namespace Ploomes_Test.WebAPI.Controller
         /// <returns>Um IAction Result de Ok, se a exclusão der certo, e um de 404 caso não exista.</returns>
         [HttpDelete("{id:guid}")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(TicketResponseDto))]
-        [ProducesResponseType(typeof(void), StatusCodes.Status404NotFound)]
+        [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
         public async Task<IActionResult> Delete(Guid id)
         {
             var result = await ticketService.Delete(id);
