@@ -41,15 +41,11 @@ builder.Services.Configure<ApiBehaviorOptions>(options =>
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
+app.UseSwagger();
+app.UseSwaggerUI(options =>
 {
-    app.UseSwagger();
-    app.UseSwaggerUI(options =>
-    {
-        options.SwaggerEndpoint("/swagger/v1/swagger.json", "Ploomes Test - Tickets");
-    });
-}
+    options.SwaggerEndpoint("/swagger/v1/swagger.json", "Ploomes Test - Tickets");
+});
 
 app.UseHttpsRedirection();
 app.MapControllers();
