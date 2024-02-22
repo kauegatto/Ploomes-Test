@@ -64,8 +64,8 @@ public class Ticket
     {
         if (Status is (TicketStatus.Completed or TicketStatus.Cancelled))
         {
-            var ex = $"Invalid status: Tickets in {Status} cannot be cancelled";
-            return Result.Fail(ex);
+            var msg = $"Invalid status: Tickets in {Status} cannot be cancelled";
+            return Result.Fail(new ValidationError(msg));
         }
         Status = TicketStatus.Cancelled;
         EndedAt = DateTimeOffset.Now;
