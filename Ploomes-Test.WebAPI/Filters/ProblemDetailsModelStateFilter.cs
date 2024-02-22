@@ -14,7 +14,6 @@ public class ProblemDetailsModelStateFilter : ActionFilterAttribute
         if (!context.ModelState.IsValid)
         {
             var problemDetails = new ValidationProblemDetails(context.ModelState);
-            problemDetails.Detail = problemDetails.Errors.ToString();
             var traceId = Activity.Current?.Id;
             problemDetails.Extensions["traceId"] = traceId;
 
