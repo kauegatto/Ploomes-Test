@@ -51,7 +51,7 @@ namespace Ploomes_Test.WebAPI.Controller
         public async Task<IActionResult> Post([FromBody] TicketCreationDto creationDto)
         {
             var result = await ticketService.Create(creationDto);
-            return result.IsFailed ? ActionResultFromError.FromResult(result) : CreatedAtAction(nameof(Get), new { id = result.Value.Id }, ticketMapper.FromTicket(result.Value));
+            return result.IsFailed ? ActionResultFromError.FromResult(HttpContext, result) : CreatedAtAction(nameof(Get), new { id = result.Value.Id }, ticketMapper.FromTicket(result.Value));
         }
         
         /// <summary>
@@ -66,7 +66,7 @@ namespace Ploomes_Test.WebAPI.Controller
         public async Task<IActionResult> Assign([FromRoute] Guid id, [FromBody] AssignTicketDto assignTicketDto)
         {
             var result = await ticketService.Assign(id, assignTicketDto.AssigneeEmail);
-            return result.IsFailed ? ActionResultFromError.FromResult(result) : Ok(ticketMapper.FromTicket(result.Value));
+            return result.IsFailed ? ActionResultFromError.FromResult(HttpContext, result) : Ok(ticketMapper.FromTicket(result.Value));
         }
 
         /// <summary>
@@ -81,7 +81,7 @@ namespace Ploomes_Test.WebAPI.Controller
         public async  Task<IActionResult> Cancel([FromRoute] Guid id, [FromBody] CancelTicketDto cancelTicketDto)
         {
             var result = await ticketService.Cancel(id, cancelTicketDto.CancellingReason);
-            return result.IsFailed ? ActionResultFromError.FromResult(result) : Ok(ticketMapper.FromTicket(result.Value));
+            return result.IsFailed ? ActionResultFromError.FromResult(HttpContext, result) : Ok(ticketMapper.FromTicket(result.Value));
         }
 
         /// <summary>
@@ -95,7 +95,7 @@ namespace Ploomes_Test.WebAPI.Controller
         public async Task<IActionResult> Complete([FromRoute] Guid id)
         {
             var result = await ticketService.Complete(id);
-             return result.IsFailed ? ActionResultFromError.FromResult(result) : Ok(ticketMapper.FromTicket(result.Value));
+             return result.IsFailed ? ActionResultFromError.FromResult(HttpContext, result) : Ok(ticketMapper.FromTicket(result.Value));
         }
         
         /// <summary>
@@ -109,7 +109,7 @@ namespace Ploomes_Test.WebAPI.Controller
         public async Task<IActionResult> Delete(Guid id)
         {
             var result = await ticketService.Delete(id);
-            return result.IsFailed ? ActionResultFromError.FromResult(result) : Ok();
+            return result.IsFailed ? ActionResultFromError.FromResult(HttpContext, result) : Ok();
         }
     }
 }

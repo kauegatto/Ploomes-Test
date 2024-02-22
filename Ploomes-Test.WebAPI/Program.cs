@@ -26,6 +26,7 @@ builder.Services.AddDbContext<DataContext>(options =>
 
 builder.Services.AddAutoMapper(typeof(MappingProfile));
 builder.Services.AddControllers();
+builder.Services.AddProblemDetails();
 builder.Services.AddSingleton<ITicketMapper, TicketMapper>();
 builder.Services.AddScoped<ITicketRepository, TicketRepository>();
 builder.Services.AddScoped<TicketService>();
