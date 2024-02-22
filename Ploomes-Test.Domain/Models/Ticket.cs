@@ -67,7 +67,7 @@ public class Ticket
             var ex = $"Invalid status: Tickets in {Status} cannot be cancelled";
             return Result.Fail(ex);
         }
-        Status = TicketStatus.Completed;
+        Status = TicketStatus.Cancelled;
         EndedAt = DateTimeOffset.Now;
         CancellingReason = cancellingReason;
         return Result.Ok();
